@@ -1,4 +1,6 @@
-import { ADD_REMINDER } from '../constants';
+import { ADD_REMINDER, GREAT_COURSE } from '../constants';
+
+//Reducers section will return a new state to set in the store
 
 //helper reminder function that returns an object as a reminder function
 const reminder = (action) => {
@@ -20,6 +22,26 @@ const reminders = (state = [], action) => {
       return reminders;
 
     //default is to return the current state from above
+    default:
+      return state;
+  }
+}
+
+const greatCourse = (action) => {
+  return {
+    texts: action.text,
+    id: Math.random()
+  }
+}
+
+const greatCourses = (state = [], action) => {
+  let greatCourses=null;
+
+  switch(action.type) {
+    case GREAT_COURSE:
+      greatCourses= [...state, greatCourse(action)];
+      console.log('greatCourses as state', greatCourses);
+      return greatCourses;
     default:
       return state;
   }
