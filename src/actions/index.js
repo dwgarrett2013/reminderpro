@@ -1,4 +1,5 @@
-import { ADD_REMINDER, GREAT_COURSE } from '../constants' //import the ADD_REMINDER variables
+import { ADD_REMINDER, DELETE_REMINDER } from '../constants' //import the ADD_REMINDER variables
+//Also need to import the deleteReminder constant for delete reminder purposes
 
 //define a reminder actionCreator and define it as a constant
 export const addReminder = (text) => {
@@ -12,15 +13,20 @@ export const addReminder = (text) => {
   return action;
 }
 
-//define a greatcourse actionCreator
-export const greatCourse= (text) => {
+/*
+  THIS IS CRITICAL!!!!!!
+*/
+
+//Step 2 of reduct logic for deleteReminder, create an actionCreator
+//in order to delete reminder, we need to know the id, so id is a paarmater to the arguement
+export const deleteReminder= (id) => {
   //this creates and action
   const action = {
-    type: GREAT_COURSE,
-    text: text
+    type: DELETE_REMINDER,
+    id    //this will be the value that we pass in as a parameter
   }
-  console.log('action in greatCourse', action);
+  console.log('deleteing in action', action);  //let me know that a deleteReminder action was created
 
-  //return the action when you are done creating it
+  //return the deleteReminder action when you are done creating it
   return action;
 }

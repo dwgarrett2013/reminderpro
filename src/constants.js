@@ -1,2 +1,2 @@
 export const ADD_REMINDER = 'ADD_REMINDER'; //we usually set initial values equal to the constant name
-export const GREAT_COURSE = 'GREAT_COURSE'; //adding a second constant for use
+export const DELETE_REMINDER = 'DELETE_REMINDER'; //steps for deleting reminder.  Step 1: create constant
