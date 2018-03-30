@@ -1,5 +1,9 @@
 # reminderpro
 
+Good stuff about react is you can always import more javascript libraries using npm
+
+Key concept in App.jsx.  If calling actionCreators call this.props.actionCreator.  Note that they need to be added to the bind and dispatch to props functions in App.jsx
+
 ## Prerequisities
 
 1.  Use `create react-app` to create application
@@ -63,6 +67,21 @@ Actions can have:
 
 2.  other keys to hold any other data
 
+
+Redux allows developers to connect values to access and retrieve from a global state using actions
+
+Need to connect component to the global states similar to the "connect method"
+
+you can using action creator to update components to all other components
+    key when you have a vast ecosystem where you need to have all components accessing a global state
+    the connect function allows one to connect a component to global store
+      connects the 2 sub functions to the global functions
+
+
+Steps to defining redux logic (changes to state)
+1.  define a constant
+2.  make an action creator
+3.  ammend or create a reducer
 
 
 Other Notes:
