@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';  //this allows you to connect to the redux store.  Imports the connect function.  requires 2 functions react components 1.  map states to props, map dispatch to props function
 //dont need bind action creators if you are importing regularly
 import { bindActionCreators } from 'redux'; //iports required function to take advantage of map dispatch to props function
-import { addReminder, deleteReminder } from '../actions';  //imports the addReminder from our actions
+import { addReminder, deleteReminder, clearReminders } from '../actions';  //imports the addReminder from our actions
 //also importing delete Reminder
+// need to import clearReminders from actions
+import moment from 'moment'; //import moment to handle date presentation
 
 //ActionCreator for reminder addReminder Action
 /*
@@ -24,7 +26,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: ''
+      text: '',
+      dueDate: '' //this is for setting the duedate
     }
   }
 
@@ -33,7 +36,8 @@ class App extends Component {
   //calls the addReminder function using the action dispatcher later on
   //this.props.addReminder is refered to as the dispatch action and calls the aciton from dispatch
   addReminder() {
-    this.props.addReminder(this.state.text);
+    console.log('this.state.dueDate', this.state.dueDate);
+    this.props.addReminder(this.state.text, this.state.dueDate);
   }
 
   //this is a helper method to delete the reminder
@@ -50,7 +54,9 @@ class App extends Component {
   //also allwo the ability to delete a reminder
     //use the unicode to create a star
   //this list button allows us to pass the id of the dispalyed object back
-
+  //we have added another div to handle the timestamp
+  //can emphasize date in <em> tag
+  //install Moment to moment to neatly present timestamp by converting timestamp to a date object and then applying the date field
   renderReminders() {
     const { reminders } = this.props;
     return (
@@ -59,7 +65,10 @@ class App extends Component {
           reminders.map(reminder => {
             return (
               <li key={reminder.id} className="list-group-item">
-                <div className="list-item">{reminder.text}</div>
+                <div className="list-item">
+                  <div>{reminder.text}</div>
+                  <div><em>{moment(new Date(reminder.dueDate)).fromNow()}</em></div>
+                </div>
                 <div
                   className="list-item delete-button"
                   onClick={() => this.deleteReminder(reminder.id)}
@@ -74,9 +83,13 @@ class App extends Component {
     )
   }
 
+  //input fields are both form-controls
   //curly braces within jsx allows us to render and run code within jsx
   //The call to addReminder invokes an action creator which updates the global store
   //The reducer receives the action that was created and uses that to interpret how to update
+  //for handline dueDate. You use an event variable
+  //Note: datetime-local does not workin firefox or ie12
+  //Last not add a button that clears reminders (no need for a helper function,just call this.props directly)
   render() {
     return (
       <div className="App">
@@ -90,6 +103,11 @@ class App extends Component {
               placeholder="I have to..."
               onChange={event => this.setState({text: event.target.value})}
             />
+            <input
+              className="form-control"
+              type="datetime-local"
+              onChange={event => this.setState({dueDate: event.target.value})}
+            />
           </div>
           <button
             type="button"
@@ -100,6 +118,12 @@ class App extends Component {
           </button>
         </div>
         { this.renderReminders() }
+        <div
+          className="btn btn-danger"
+          onClick={() => this.props.clearReminders()}
+        >
+        Clear Reminders
+        </div>
       </div>
     )
   }
@@ -127,7 +151,7 @@ function mapDispatchToProps(dispatch) {
   //uses dispatch function to update global state using action creator
   //connect feature smakes components assessible
   //you can add deleteReminder in there
-  return bindActionCreators({addReminder, deleteReminder}, dispatch);
+  return bindActionCreators({addReminder, deleteReminder, clearReminders}, dispatch);
 }
 
 
@@ -137,4 +161,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(App);
 
 //Can do a simplified versuiion with ES6 but can make more confusing
-//export default connect(mapStateToProps, { addReminder, deleteReminder })(App);
+//export default connect(mapStateToProps, { addReminder, deleteReminder, clearReminders })(App);

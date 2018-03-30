@@ -1,5 +1,9 @@
 # reminderpro
 
+Good stuff about react is you can always import more javascript libraries using npm
+
+Key concept in App.jsx.  If calling actionCreators call this.props.actionCreator.  Note that they need to be added to the bind and dispatch to props functions in App.jsx
+
 ## Prerequisities
 
 1.  Use `create react-app` to create application

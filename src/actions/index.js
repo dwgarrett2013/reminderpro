@@ -1,12 +1,14 @@
-import { ADD_REMINDER, DELETE_REMINDER } from '../constants' //import the ADD_REMINDER variables
+import { ADD_REMINDER, DELETE_REMINDER, CLEAR_REMINDERS } from '../constants' //import the ADD_REMINDER variables
 //Also need to import the deleteReminder constant for delete reminder purposes
+//need to import clear reminders
 
-//define a reminder actionCreator and define it as a constant
-export const addReminder = (text) => {
+//define a reminder actionCreator and define it as a constant, adding a second reminder
+export const addReminder = (text,dueDate) => {
   //this creates and action
   const action = {
     type: ADD_REMINDER,
-    text: text
+    text: text,
+    dueDate: dueDate
   }
   console.log('action in addReminder', action);
   //return the action when you are done creating it
@@ -29,4 +31,17 @@ export const deleteReminder= (id) => {
 
   //return the deleteReminder action when you are done creating it
   return action;
+}
+
+/*
+  THIS IS CRITICAL!!!!!!
+*/
+
+//Step 2 of reduct logic for clearReminders, create an actionCreator
+//Create an actionCreator that clears all reminders
+//it does not need an input since it is clearing all
+export const clearReminders= () => {
+  return {
+    type: CLEAR_REMINDERS
+  }
 }
