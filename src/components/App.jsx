@@ -50,6 +50,14 @@ class App extends Component {
     this.props.deleteReminder(id);
   }
 
+  //adding helper function to return a time passed value if the reminder has passed
+  getReminderValue(dueDate, currDate) {
+    if (moment(new Date(dueDate)).diff(moment(currDate)) <=0) {
+      return 'Time Passed';
+    }
+    return moment(new Date(dueDate)).fromNow();
+  }
+
   //returns unorderd list of reminders submitted by Users
   //also allwo the ability to delete a reminder
     //use the unicode to create a star
@@ -57,6 +65,7 @@ class App extends Component {
   //we have added another div to handle the timestamp
   //can emphasize date in <em> tag
   //install Moment to moment to neatly present timestamp by converting timestamp to a date object and then applying the date field
+  //<div><em>{moment(new Date(reminder.dueDate)).fromNow()}</em></div>
   renderReminders() {
     const { reminders } = this.props;
     return (
@@ -67,7 +76,9 @@ class App extends Component {
               <li key={reminder.id} className="list-group-item">
                 <div className="list-item">
                   <div>{reminder.text}</div>
-                  <div><em>{moment(new Date(reminder.dueDate)).fromNow()}</em></div>
+                  <div><em>{
+                    this.getReminderValue(reminder.dueDate, new Date())
+                  }</em></div>
                 </div>
                 <div
                   className="list-item delete-button"
